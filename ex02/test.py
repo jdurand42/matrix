@@ -15,7 +15,6 @@ class TestLinearInerpolation(unittest.TestCase):
         assert lerp(0, 1, 0) == 0
         assert lerp(0, 1, 1) == 1
         assert lerp(0, 1, 0.5) == 0.5
-        # print(lerp(21, 42, 0.3))
         assert lerp(21, 42, 0.3) == 27.3
  
     def test_on_vectors(self):
