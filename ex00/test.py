@@ -140,5 +140,49 @@ class TestBasicMatrixOperations(unittest.TestCase):
         assert v.data[0].data == [2, 4, 6]
         assert v.data[1].data == [8, 10, 12]
 
+class TestVectorMagicMethods(unittest.TestCase):
+    def test_add_radd(self):
+        v = Vector([1.5, 2.5, 3.5])
+        v2 = Vector([0.5, 0, 2])
+
+        v3 = v + v2
+        assert v3.data == [2, 2.5, 5.5]
+        assert v3.size == 3
+        assert v.data == [1.5, 2.5, 3.5]
+        assert v2.data == [0.5, 0, 2]
+        assert (v2 + v).data == [2, 2.5, 5.5]
+        assert (v2 + v).size == 3
+        assert v.data == [1.5, 2.5, 3.5]
+        assert v2.data == [0.5, 0, 2]
+    
+    def test_sub_rsub(self):
+        v = Vector([1, 2, 3.5])
+        v2 = Vector([1, 1.5, 2])
+
+        v3 = v - v2
+        assert v3.data == [0, 0.5, 1.5]
+        assert v3.size == 3
+        assert v.data == [1, 2, 3.5]
+        assert v2.data == [1, 1.5, 2]
+
+        v3 = v2 - v
+        assert v3.data == [0, 1.5 - 2, 2 - 3.5]
+        assert v3.size == 3
+        assert v.data == [1, 2, 3.5]
+        assert v2.data == [1, 1.5, 2]
+    
+    def test_mul_rmul(self):
+        v = Vector([0.5, 2., 4, 8])
+
+        v3 = v * 2
+        assert v3.data == [1, 4, 8, 16]
+        assert v.data == [0.5, 2., 4, 8]
+        assert v.size == 4
+
+        v3 = 2 * v
+        assert v3.data == [1, 4, 8, 16]
+        assert v.data == [0.5, 2., 4, 8]
+        assert v.size == 4
+
 if __name__=="__main__":
     unittest.main()

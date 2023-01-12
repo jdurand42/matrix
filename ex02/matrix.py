@@ -10,8 +10,6 @@ class Vector:
         except:
             raise TypeError("Vector: __init__: Arg is invalid, must be list type")
     
-    # def check_vector_input(self, *args, **kwargs)
-
     def size(self):
         return self.size
     
@@ -24,8 +22,6 @@ class Vector:
         except:
             raise TypeError("Vector: reshape: shape must be a tuple of the form (m, n). Ex: (4, 2)")
         pass
-
-    # Iterations
 
     def __len__(self):
         return self.size
@@ -45,8 +41,6 @@ class Vector:
             raise ValueError("Error, value must be a float")
         self.data[i] = float(value)
     
-    # Ex00
-
     def add(self, v):
         for i in range(len(v)):
             self.data[i] += v[i]
@@ -61,33 +55,6 @@ class Vector:
         for i in range(len(self.data)):
             self.data[i] *= k
         return self
-    
-    # magic
-
-    def __add__(self, v):
-        l = lambda a, b: ([x + y for (x, y) in zip(a, b)])
-        return Vector(l(self.data, v.data))
-
-    def __radd__(self, v):
-        l = lambda a, b: ([x + y for (x, y) in zip(a, b)])
-        return Vector(l(v.data, self.data))
-    
-    def __sub__(self, v):
-        l = lambda a, b: ([x - y for (x, y) in zip(a, b)])
-        return Vector(l(self.data, v.data))
-    
-    def __rsub__(self, v):
-        l = lambda a, b: ([x - y for (x, y) in zip(a, b)])
-        return Vector(l(v.data, self.data))
-    
-    def __mul__(self, k):
-        l = lambda a, k: ([x * k for x in a])
-        return Vector(l(self.data, k))
-    
-    def __rmul__(self, k):
-        l = lambda a, k: ([x * k for x in a])
-        return Vector(l(self.data, k))
-
 
 class Matrix:
     def __init__(self, arg) -> None:
