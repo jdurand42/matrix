@@ -1,4 +1,6 @@
 
+import ctypes
+
 class Vector:
     def __init__(self, vec) -> None:
         self.data = []

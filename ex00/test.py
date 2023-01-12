@@ -113,10 +113,10 @@ class TestMatrix(unittest.TestCase):
     def test_basic_methods(self):
         m = Matrix([[1, 2], [2, 4]])
         assert m.issquare()
-        m.print()
+        # m.print()
         m = Matrix([[1, 2, 3], [1, 2, 3]])
         assert m.issquare() == False
-        m.print()
+        # m.print()
 
 
 class TestVectorBasicOperations(unittest.TestCase):
@@ -141,11 +141,11 @@ class TestVectorBasicOperations(unittest.TestCase):
         # v2 = Vector([1, 1, 1])
 
         v.scl(2)
-        v.print()
+        # v.print()
         assert v.size == 3
         assert v.data == [2, 4, 6]
 
-def check_matrix_res(m: Matrix, res: list):
+def check_matrix_res(m, res):
     assert len(m) == m.shape[0]
     assert len(m) == len(res)
     for i in range(len(m)):
