@@ -60,7 +60,6 @@ class TestMatrix(unittest.TestCase):
         for el in m.data:
             assert isinstance(el, Vector)
 
-
     def test_init_errors(self):
         with self.assertRaises(TypeError):
             m = Matrix([1., 2., 3.])
@@ -73,6 +72,44 @@ class TestMatrix(unittest.TestCase):
         with self.assertRaises(TypeError):
             m = Matrix((1., 2.), (1., 2.))
 
+    def test_iterations(self):
+        m = Matrix([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]])
+        
+        assert len(m) == 3
+        assert len(m) == m.shape[0]
+        assert m.shape[1] == 4
+        for i in range(len(m)):
+            assert len(m[i]) == 4
+            assert isinstance(m[i], Vector)
+            assert m[i].data == [i+1, i+1, i+1, i+1]
+            m[i] = [i, i, i, i]
+        
+        assert len(m) == 3
+        assert len(m) == m.shape[0]
+        assert m.shape[1] == 4
+        for i in range(len(m)):
+            assert len(m[i]) == 4
+            assert isinstance(m[i], Vector)
+            assert m[i].data == [i, i, i, i]
+            m[i] = Vector([i+2, i+2, i+2, i+2])
+        
+        assert len(m) == 3
+        assert len(m) == m.shape[0]
+        assert m.shape[1] == 4
+        for i in range(len(m)):
+            assert len(m[i]) == 4
+            assert isinstance(m[i], Vector)
+            assert m[i].data == [i+2, i+2, i+2, i+2]
+        
+        with self.assertRaises(ValueError):
+            m[0] = [0, 0, 0]
+        
+        with self.assertRaises(ValueError):
+            m[0] = "dsdass"
+        
+        with self.assertRaises(ValueError):
+            m[0] = Vector([0])
+
     def test_basic_methods(self):
         m = Matrix([[1, 2], [2, 4]])
         assert m.issquare()
@@ -82,7 +119,7 @@ class TestMatrix(unittest.TestCase):
         m.print()
 
 
-class TestBasicVectorOperations(unittest.TestCase):
+class TestVectorBasicOperations(unittest.TestCase):
     def test_add(self):
         v = Vector([1, 2, 3])
         v2 = Vector([10.5, 10.5, 10.5])
@@ -108,7 +145,16 @@ class TestBasicVectorOperations(unittest.TestCase):
         assert v.size == 3
         assert v.data == [2, 4, 6]
 
-class TestBasicMatrixOperations(unittest.TestCase):
+def check_matrix_res(m: Matrix, res: list):
+    assert len(m) == m.shape[0]
+    assert len(m) == len(res)
+    for i in range(len(m)):
+        assert len(m[i]) == m.shape[1]
+        assert len(m[i]) == len(res[i])
+        assert m[i].data == res[i]
+
+
+class TestMatrixBasicOperations(unittest.TestCase):
     def test_add(self):
         v = Matrix([[1, 2, 3], [3, 2, 1]])
         v2 = Matrix([[10.5, 10.5, 10.5], [10.5, 10.5, 10.5]])
@@ -183,6 +229,32 @@ class TestVectorMagicMethods(unittest.TestCase):
         assert v3.data == [1, 4, 8, 16]
         assert v.data == [0.5, 2., 4, 8]
         assert v.size == 4
+
+class TestMatrixMagicMethods(unittest.TestCase):
+    def test_add_radd(self):
+        m = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        m2 = Matrix([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]])
+        res = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+        check_matrix_res(m + m2, res)
+        check_matrix_res(m2 + m, res)
+    
+    def test_sub_rsub(self):
+        m = Matrix([[1, 2, 3], [10, 11, 12]])
+        m2 = Matrix([[1, 1, 2], [9, 10, 12]])
+        res1 = [[0, 1, 1], [1, 1, 0]]
+        res2 = [[0, -1, -1], [-1, -1, 0]]
+
+        check_matrix_res(m - m2, res1)
+        check_matrix_res(m2 - m, res2)
+    
+    def check_mul_rmul(self):
+        m = Matrix([[0, 1, 2], [2, 1, 0]])
+        k = 4
+        res = [[0, 4, 8], [8, 4, 0]]
+
+        check_matrix_res(m * k, res)
+        check_matrix_res(k * m, res)
 
 if __name__=="__main__":
     unittest.main()

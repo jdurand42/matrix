@@ -141,3 +141,54 @@ class Matrix:
         for i in range(len(self.data)):
             self.data[i].scl(k)
         return self
+    
+    # Iter
+
+    def __len__(self):
+        return self.shape[0]
+    
+    def __iter__(self):
+        return iter(self.data)
+    
+    def __getitem__(self, i: int):
+        if isinstance(i, int) == False:
+            raise ValueError("Error: indice must be a int")
+        return self.data[i]
+    
+    def __setitem__(self, i: int, value):
+        if isinstance(i, int) == False:
+            raise ValueError("Error: indice must be a int")
+        if isinstance(value, (Vector, list)) == False:
+            raise ValueError("Error, value must be a Vector or a list")
+        if len(value) != self.shape[1]:
+            raise ValueError(f"Error: value len must be for form {self.shape[1]}")
+        if isinstance(value, Vector):
+            self.data[i] = Vector(value.data)
+        else:
+            self.data[i] = Vector(value)
+
+    #  Magic
+
+    def __add__(self, m):
+        l = lambda a, b: ([x + y for (x, y) in zip(a, b)])
+        return Matrix(l(self.data, m.data))
+
+    def __radd__(self, m):
+        l = lambda a, b: ([x + y for (x, y) in zip(a, b)])
+        return Matrix(l(m.data, self.data))
+    
+    def __sub__(self, m):
+        l = lambda a, b: ([x - y for (x, y) in zip(a, b)])
+        return Matrix(l(self.data, m.data))
+    
+    def __rsub__(self, m):
+        l = lambda a, b: ([x - y for (x, y) in zip(a, b)])
+        return Matrix(l(m.data, self.data))
+    
+    def __mul__(self, k):
+        l = lambda a, k: ([x * k for x in a])
+        return Matrix(l(self.data, k))
+    
+    def __rmul__(self, k):
+        l = lambda a, k: ([x * k for x in a])
+        return Matrix(l(self.data, k))
