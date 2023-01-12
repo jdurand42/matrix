@@ -11,19 +11,21 @@ def check_matrix_res(m: Matrix, res: list):
 
 class TestDotProduct(unittest.TestCase):
     # pass
-    u = Vector([1., 1.])
-    v = Vector([1., 1.])
+    def test_dot(self):
+        u = Vector([1., 1.])
+        v = Vector([1., 1.])
 
-    assert u.dot(v) == 2
-    
-    u = Vector([-1., 6.])
-    v = Vector([3., 2.])
-    
-    assert u.dot(v) == 9
+        assert u.dot(v) == 2
 
-    u = Vector([0., 0.])
-    v = Vector([1., 1.])
+        u = Vector([-1., 6.])
+        v = Vector([3., 2.])
 
-    assert u.dot(v) == 0
+        assert u.dot(v) == 9
+
+        u = Vector([0., 0.])
+        v = Vector([1., 1.])
+
+        assert u.dot(v) == 0
+
 if __name__=="__main__":
     unittest.main()
