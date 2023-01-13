@@ -214,28 +214,14 @@ class Vector
 
         void add(const Vector &v)
         {
-            // _check_compatibility(v);
-            // for (int i = 0; i < _size; i++)
-            // {
-                // _data[i] = _data[i] + v._data[i];
-            // }
             *this += v;
         } 
         void sub(const Vector &v)
         {
-            // _check_compatibility(v);
-            // for (int i = 0; i < _size; i++)
-            // {
-                // _data[i] = _data[i] - v._data[i];
-            // }
             *this -= v;
         } 
         void scl(const float &k)
         {
-            // for (int i = 0; i < _size; i++)
-            // {
-                // _data[i] = _data[i] * k;
-            // }
             *this *= k;
         } 
 

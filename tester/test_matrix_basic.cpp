@@ -66,10 +66,73 @@ static void test_operators()
     // std::cout << m << std::endl;    
 }
 
+static void test_basic()
+{
+    Matrix<> m = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
+    Matrix<> m2 = {{1, 1}, {2, 2}, {3, 3}};
+
+    ft_print("issquare", m.issquare(), true);
+    ft_print("issquare", m2.issquare(), false);
+
+    // Reshape
+}
+
+static void test_math_operators()
+{
+    Matrix<> u = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
+    Matrix<> v = {{0, 0, 0}, {1, 1, 1}, {0.5, 0.5, 0.5}};
+    Matrix<> bu(u);
+    Matrix<> bv(v);
+    Matrix<> upv = {{1, 1, 1}, {3, 3, 3}, {3.5, 3.5, 3.5}};
+
+    ft_print("u + v", u + v, upv);
+    ft_print("u + v", v + u, upv);
+    ft_print("check no inplace", u, bu);
+    ft_print("check no inplace", v, bv);
+
+
+    ft_print("u - v", u - v, Matrix<>({{1, 1, 1}, {2-1,2-1,2-1}, {3-0.5, 3-0.5, 3-0.5}}));
+    ft_print("u - v", v - u, Matrix<>({{-1, -1, -1}, {1-2, 1-2, 1-2}, {0.5-3, 0.5-3, 0.5-3}}));
+    ft_print("check no inplace", u, bu);
+    ft_print("check no inplace", v, bv);
+
+    u = Matrix<>({{1, 2, 3}, {3, 2, 1}});
+    bu = Matrix<>(u);
+    ft_print("u * k", u * 0.5, Matrix<>({{0.5, 1, 1.5}, {1.5, 1, 0.5}}));
+    ft_print("check no inplace", u, bu);
+    int k = 2;
+    ft_print("u * k", u * k, Matrix<>({{2, 4, 6}, {6, 4, 2}}));
+    ft_print("check no inplace", u, bu);
+
+
+    u = Matrix<>({{1.1, 1}, {2.1, 2}});
+    v = Matrix<>({{1.1, 1}, {2.1, 2}});
+    bu = Matrix<>(u);
+    bv = Matrix<>(v);
+
+    u += v;
+    ft_print("u += v", u, bu * 2);
+    ft_print("v", v, bv);
+    
+    u -= v;
+    ft_print("u -= v", u, bu);
+    ft_print("v", v, bv);
+    
+    v -= u;
+    ft_print("v -= u", v, bv - u);
+    ft_print("u", u, bu);
+
+    u *= 2;
+    ft_print("u *= k", u, bu * 2);
+    u *= 0.5f;
+    ft_print("u *= 0.5", u, bu * 2 * 0.5);
+}
 
 void test_matrix_basic()
 {
     std::cout << BOLDMAGENTA << "---- TESTS ON MATRIXS ---- \n" << RESET;
     test_constructors();
     test_operators();
+    test_basic();
+    test_math_operators();
 }
