@@ -141,6 +141,16 @@ class Vector
             return Vector(r);
         }
 
+        void operator += (const Vector &v)
+        {
+            _check_compatibility(v);
+            // std::vector<T> r(_size, 0);
+            for (int i = 0; i < _size; i++)
+            {
+                _data[i] += v._data[i];
+            }
+        }
+
         Vector operator - (const Vector &v) const
         {
             _check_compatibility(v);
@@ -152,9 +162,17 @@ class Vector
             return Vector(r);
         }
 
+        void operator -= (const Vector &v)
+        {
+            _check_compatibility(v);
+            for (int i = 0; i < _size; i++)
+            {
+                _data[i] -= v._data[i];
+            }
+        }
+
         Vector operator * (const float &k) const
         {
-            // _check_compatibility(v);
             std::vector<T> r(_size, 0);
             for (int i = 0; i < _size; i++)
             {
@@ -163,41 +181,62 @@ class Vector
             return Vector(r);
         }
         
-        Vector operator * (const int &k) const
+        // Vector operator * (const int &k) const
+        // {
+            // _check_compatibility(v);
+            // std::vector<T> r(_size, 0);
+            // for (int i = 0; i < _size; i++)
+            // {
+                // r[i] = _data[i] * k;
+            // }
+            // return Vector(r);
+        // }
+        
+        void operator *= (const float &k)
         {
             // _check_compatibility(v);
-            std::vector<T> r(_size, 0);
             for (int i = 0; i < _size; i++)
             {
-                r[i] = _data[i] * k;
+                _data[i] *= k;
             }
-            return Vector(r);
         }
+        
+        // void operator *= (const int &k) const
+        // {
+        //     // _check_compatibility(v);
+        //     for (int i = 0; i < _size; i++)
+        //     {
+        //         _data[i] *= k;
+        //     }
+        // }
 
         // ex00
 
         void add(const Vector &v)
         {
-            _check_compatibility(v);
-            for (int i = 0; i < _size; i++)
-            {
-                _data[i] = _data[i] + v._data[i];
-            }
+            // _check_compatibility(v);
+            // for (int i = 0; i < _size; i++)
+            // {
+                // _data[i] = _data[i] + v._data[i];
+            // }
+            *this += v;
         } 
         void sub(const Vector &v)
         {
-            _check_compatibility(v);
-            for (int i = 0; i < _size; i++)
-            {
-                _data[i] = _data[i] - v._data[i];
-            }
+            // _check_compatibility(v);
+            // for (int i = 0; i < _size; i++)
+            // {
+                // _data[i] = _data[i] - v._data[i];
+            // }
+            *this -= v;
         } 
         void scl(const float &k)
         {
-            for (int i = 0; i < _size; i++)
-            {
-                _data[i] = _data[i] * k;
-            }
+            // for (int i = 0; i < _size; i++)
+            // {
+                // _data[i] = _data[i] * k;
+            // }
+            *this *= k;
         } 
 
         // template<typename T=float>

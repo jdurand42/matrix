@@ -42,5 +42,6 @@ void ft_print(const std::string& method, const T& tested, const T& result)
 };
 
 void test_vector_basic();
+void test_ex00();
 
 #endif

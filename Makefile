@@ -1,6 +1,6 @@
 NAME		=	tester.out
 
-SRCS	=	./tester/main.cpp ./tester/test_vector_basic.cpp
+SRCS	=	./tester/main.cpp ./tester/test_vector_basic.cpp ./tester/test_ex00.cpp
 
 CC		=	clang++
 
