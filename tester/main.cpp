@@ -7,6 +7,7 @@ static void test_all()
 {
 	test_vector_basic();
     test_ex00();
+    test_matrix_basic();
 	// test_list();
 	// test_queue();
 	// test_stack();
@@ -26,8 +27,8 @@ int main(int ac, char** av)
 				test_vector_basic();
 			else if (std::string(av[i]) == "ex00")
 				test_ex00();
-			// else if (std::string(av[i]) == "map")
-				// test_map();
+			else if (std::string(av[i]) == "matrix")
+				test_matrix_basic();
 			// else if (std::string(av[i]) == "queue")
 				// test_queue();
 			// else if (std::string(av[i]) == "stack")

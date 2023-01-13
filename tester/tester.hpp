@@ -2,7 +2,7 @@
 #define TESTER_HPP
 
 #include "../Vector.hpp"
-// #include "../Matrix.hpp"
+#include "../Matrix.hpp"
 
 #include <vector>
 #include <ctime>
@@ -32,7 +32,7 @@ template<typename T>
 void ft_print(const std::string& method, const T& tested, const T& result)
 {
 	usleep(TIME);
-	std::cout << "---- Test on " << method << ": " << std::endl;
+	std::cout << "- " << method << ": " << std::endl;
 	if (tested == result)
 		std::cout << GREEN << "OK -> ";
 	else
@@ -43,5 +43,6 @@ void ft_print(const std::string& method, const T& tested, const T& result)
 
 void test_vector_basic();
 void test_ex00();
+void test_matrix_basic();
 
 #endif
