@@ -28,6 +28,17 @@
 
 #define TIME 0
 
+// void print_title(const std::string& t, const int i = 0)
+// {
+	// const char *color = BOLDYELLOW;
+	// if (i == 1)
+	// {
+		// std::cout << std::endl;
+		// color = BOLDMAGENTA;
+	// }
+	// std::cout << color << t << std::endl << "-------" << std::endl <<  RESET;
+// };
+
 template<typename T>
 void ft_print(const std::string& method, const T& tested, const T& result)
 {
@@ -41,8 +52,14 @@ void ft_print(const std::string& method, const T& tested, const T& result)
 	std::cout << RESET << std::endl;
 };
 
+
+void print_title(const std::string &t, const int i=0);
+
 void test_vector_basic();
-void test_ex00();
 void test_matrix_basic();
+void test_ex00();
+void test_ex01();	
+void test_ex02();
+
 
 #endif

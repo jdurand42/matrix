@@ -256,5 +256,10 @@ std::ostream& operator << (std::ostream& os, const Matrix<T>& m)
     return os;
 }
 
+template<typename T=float>
+Matrix<T> lerp(const Matrix<T> &u, const Matrix<T> &v, const float &t)
+{
+    return u + ((v - u) * t);
+}
 
 #endif

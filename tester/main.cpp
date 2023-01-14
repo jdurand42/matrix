@@ -6,13 +6,26 @@
 static void test_all()
 {
 	test_vector_basic();
-    test_ex00();
     test_matrix_basic();
+	test_ex00();
+	test_ex01();
+	test_ex02();
 	// test_list();
 	// test_queue();
 	// test_stack();
 	// test_map();
 }
+
+void print_title(const std::string& t, const int i)
+{
+	const char *color = BOLDYELLOW;
+	if (i == 1)
+	{
+		std::cout << std::endl;
+		color = BOLDMAGENTA;
+	}
+	std::cout << color << t << std::endl << "-------" << std::endl <<  RESET;
+};
 
 int main(int ac, char** av)
 {
@@ -25,10 +38,14 @@ int main(int ac, char** av)
 		{
 			if (std::string(av[i]) == "vector")
 				test_vector_basic();
-			else if (std::string(av[i]) == "ex00")
-				test_ex00();
 			else if (std::string(av[i]) == "matrix")
 				test_matrix_basic();
+			else if (std::string(av[i]) == "ex01")
+				test_ex01();
+			else if (std::string(av[i]) == "ex00")
+				test_ex00();
+			else if (std::string(av[i]) == "ex02")
+				test_ex02();
 			// else if (std::string(av[i]) == "queue")
 				// test_queue();
 			// else if (std::string(av[i]) == "stack")

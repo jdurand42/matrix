@@ -4,9 +4,10 @@
 #include "../Vector.hpp"
 #include "tester.hpp"
 
+
 static void test_constructors()
 {
-	std::cout << BOLDYELLOW << "---- TESTS ON CONSTRUCTORS ---- \n" << RESET;
+	print_title("Constructors");
 
     Vector<> v_0;
     std::cout << v_0.size();
@@ -55,7 +56,7 @@ static void test_constructors()
 
 static void test_basics()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON Basics ---- \n" << RESET;
+    print_title("Basics");
 
     Vector<> u = {1, 2, 3};
     Vector<> v = {3, 2, 1};
@@ -68,7 +69,7 @@ static void test_basics()
 
 static void test_math_operators()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON math operators ---- \n" << RESET;
+    print_title("Math operators");
 
     Vector<> u = {1, 2, 4};
     Vector<> bu = {1, 2, 4};
@@ -108,6 +109,7 @@ static void test_math_operators()
 
 void test_vector_basic()
 {
+    print_title("Vectors", 1);
     try
     {
         test_constructors();

@@ -9,7 +9,7 @@
 
 static void test_v_add()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON add---- \n" << RESET;
+    print_title("v_add");
 
     Vector<> u = {1, 2, 4};
     Vector<> bu = {1, 2, 4};
@@ -26,7 +26,7 @@ static void test_v_add()
 
 static void test_v_sub()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON sub---- \n" << RESET;
+    print_title("v_sub");
     Vector<> u = {1, 2, 4};
     Vector<> bu = {1, 2, 4};
     Vector<> v = {3, 2, 1};
@@ -44,7 +44,7 @@ static void test_v_sub()
 
 static void test_v_scl()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON scl---- \n" << RESET;
+    print_title("v_scl");
     Vector<> u = {1, 2, 4};
     Vector<> bu = {1, 2, 4};
 
@@ -62,7 +62,7 @@ static void test_v_scl()
 
 static void test_m_add()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON add---- \n" << RESET;
+    print_title("m_add");
 
     Matrix<> u = {{1, 2, 4}, {1, 2, 4}};
     Matrix<> bu = {{1, 2, 4}, {1, 2, 4}};
@@ -78,8 +78,7 @@ static void test_m_add()
 
 static void test_m_sub()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON SUB---- \n" << RESET;
-
+    print_title("m_sub");
     Matrix<> u = {{1, 2, 4}, {1, 2, 4}};
     Matrix<> bu = {{1, 2, 4}, {1, 2, 4}};
     Matrix<> v = {{3, 2, 1}, {3, 2, 1}};
@@ -97,6 +96,7 @@ static void test_m_sub()
 
 static void test_m_scl()
 {
+    print_title("m_scl");
     Matrix<> u = {{1, 2, 4}, {1, 2, 4}};
     Matrix<> bu = {{1, 2, 4}, {1, 2, 4}};
 
@@ -114,12 +114,10 @@ static void test_m_scl()
 
 void test_ex00()
 {
-    std::cout << BOLDMAGENTA << "---- EX00---- \n" << RESET;
-    std::cout << BOLDYELLOW << "---- VECTOR---- \n" << RESET;
+    print_title("Ex00", 1);
     test_v_add();
     test_v_sub();
     test_v_scl();
-    std::cout << BOLDYELLOW << "---- MATRIX---- \n" << RESET;
     test_m_add();
     test_m_sub();
     test_m_scl();

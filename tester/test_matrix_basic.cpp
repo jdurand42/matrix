@@ -5,7 +5,7 @@
 
 static void test_constructors()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON CONSTRUCTORS ---- \n" << RESET;
+    print_title("Constructors");
 
     Matrix<> m;
     int s[2];
@@ -45,7 +45,7 @@ static void test_constructors()
 
 static void test_operators()
 {
-    std::cout << BOLDYELLOW << "---- TESTS ON Operators ---- \n" << RESET;
+    print_title("Operators");
 
     Matrix<> m(std::vector<Vector<float>>({Vector<>({1, 1}), Vector<>({2, 2})}));
     Matrix<> m2(std::vector<Vector<float>>({Vector<>({1, 1}), Vector<>({2, 2})}));
@@ -68,6 +68,7 @@ static void test_operators()
 
 static void test_basic()
 {
+    print_title("Basics");
     Matrix<> m = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
     Matrix<> m2 = {{1, 1}, {2, 2}, {3, 3}};
 
@@ -79,6 +80,7 @@ static void test_basic()
 
 static void test_math_operators()
 {
+    print_title("Math operators");
     Matrix<> u = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
     Matrix<> v = {{0, 0, 0}, {1, 1, 1}, {0.5, 0.5, 0.5}};
     Matrix<> bu(u);
@@ -130,7 +132,7 @@ static void test_math_operators()
 
 void test_matrix_basic()
 {
-    std::cout << BOLDMAGENTA << "---- TESTS ON MATRIXS ---- \n" << RESET;
+    print_title("Matrix", 1);
     test_constructors();
     test_operators();
     test_basic();

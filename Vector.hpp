@@ -244,7 +244,7 @@ class Vector
         }
 };
 
-template<typename T>
+template<typename T=float>
 std::ostream& operator << (std::ostream& os, const Vector<T>& v)
 {
     os << "[";
@@ -259,6 +259,38 @@ std::ostream& operator << (std::ostream& os, const Vector<T>& v)
     // os << std::endl;
     return os;
 }
+
+template<typename T=float>
+Vector<T> linear_combination(const std::vector<Vector<T>>& us, const std::vector<T> &ks)
+{
+    int len = us.size();
+    if (len != (int)ks.size() || us.empty())
+        throw std::invalid_argument("Invalid argument: Sizes must be equals");
+    
+    int size = us[0].size();
+
+    Vector<T> r(size);
+
+    for (int i = 0; i < size; i++) {
+			for (int j = 0; j < len; j++) {
+				r[i] += us[j][i] * ks[j];
+			}
+		}
+    return r;
+}
+
+template<typename T=float>
+Vector<T> lerp(const Vector<T> &u, const Vector<T> &v, const float &t)
+{
+    return u + ((v - u) * t);
+}
+
+template<typename T=float>
+T lerp(const T &u, const T &v, const float &t)
+{
+    return (u + ((v - u) * t));
+}
+
 
 
 #endif
