@@ -27,6 +27,14 @@ class Matrix
             _shape[1] = _data[0].size();
         };
         
+        Matrix(const int& m, const int& n)
+        {
+            _shape[0] = m;
+            _shape[1] = n;
+            for (int i = 0; i < m; i++)
+                _data.push_back(Vector<T>(n));
+        }
+
         Matrix(std::initializer_list<std::initializer_list<T>> l)
         {
             _shape[0] = l.size();
@@ -212,6 +220,58 @@ class Matrix
             {
                 _data[i] *= k;
             }
+        }
+
+        // ex07
+
+        Matrix operator * (const Matrix& m) const
+        {
+            Matrix<> r(_shape[0], m._shape[1]);
+            for (int i = 0; i < r._shape[0]; i++)
+                for (int j = 0; j < r._shape[1]; j++)
+                    for (int k = 0; k < m._shape[0]; k++)
+                        r._data[i][j] += (_data[i][k] * m[k][j]);
+            return r;
+        }
+
+        Vector<T> operator * (const Vector<T>& v) const
+        {
+            Vector<> r(_shape[0]);
+            for (int i = 0; i < _shape[0]; i++)
+                for (int j = 0; j < v.size(); j++)
+                {
+                    r[i] += (_data[i][j] * v[j]);
+                }
+            return r;
+        }
+        
+        void operator *= (const Matrix& m)
+        {
+            *this = *this * m;
+        }
+
+        Matrix mul_mat(const Matrix& m) const
+        {
+            return *this * m;
+        }
+
+        Vector<T> mul_vec(const Vector<T>& v) const
+        {
+            return *this * v;
+        }
+
+        // ex08
+
+        T trace() const
+        {
+            if (issquare() == false)
+                throw std::invalid_argument("Trace: Cannot get trace of a non square matrix");
+            
+            T r = T();
+            
+            for (int i = 0; i < _shape[0]; i++)
+            r += _data[i][i];
+            return r;
         }
 
         template<class u> friend std::ostream& operator << (std::ostream&, const Matrix<T>&);

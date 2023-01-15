@@ -60,6 +60,15 @@ void test_matrix_basic();
 void test_ex00();
 void test_ex01();	
 void test_ex02();
-
+void test_ex03();
+void test_ex04();
+void test_ex05();
+void test_ex06();
+void test_ex07();
+void test_ex08();
+// void test_ex09();
+// void test_ex10();
+// void test_ex11();
+// void test_ex12();
 
 #endif

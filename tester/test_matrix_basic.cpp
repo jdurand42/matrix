@@ -40,6 +40,12 @@ static void test_constructors()
 
     m6 = m4;
     ft_print("m = m", (m6 == m4), true);
+
+    m = Matrix<>(3, 2);
+    ft_print("m(m, n)", m.shape()[0], 3);
+    ft_print("m(m, n)", m.shape()[1], 2);
+    for (int i = 0; i < 3; i++)
+        ft_print("m(m, n)", m[i].size(), 2);
 }
 
 

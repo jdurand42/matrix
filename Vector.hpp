@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <cmath>
 
 template <typename T=float>
 class Vector
@@ -16,13 +17,13 @@ class Vector
         Vector()
         {
             _size = 0;
-            this->_data = std::vector<T>(0, 0);
+            this->_data = std::vector<T>(0, T());
         };
 
         Vector(const int size)
         {
             _size = size;
-            this->_data = std::vector<T>(size, 0);
+            this->_data = std::vector<T>(size, T());
         };
 
         Vector(std::initializer_list<T> l)
@@ -133,7 +134,7 @@ class Vector
         Vector operator + (const Vector &v) const
         {
             _check_compatibility(v);
-            std::vector<T> r(_size, 0);
+            std::vector<T> r(_size, T());
             for (int i = 0; i < _size; i++)
             {
                 r[i] = _data[i] + v._data[i];
@@ -225,6 +226,50 @@ class Vector
             *this *= k;
         } 
 
+        // ex03
+
+        T dot(const Vector& v) const
+        {
+            float res = T();
+            _check_compatibility(v);
+            for (int i = 0; i < _size; i++)
+            {
+                res += _data[i] * v._data[i];
+            }
+            return res;
+        }
+
+        // Ex04
+
+        float norm() const
+        {
+            float r = powf(dot(*this), 0.5);
+            return r;
+        }
+
+        float norm_1() const
+        {
+            float r = 0;
+
+            for (int i = 0; i < _size; i++)
+            {
+                r += this->abs(_data[i]);
+            }
+            return r; 
+        }
+
+        float norm_inf() const
+        {
+            float max = this->abs(_data[0]);
+
+            for (int i = 0; i < _size; i++)
+            {
+                if (this->abs(_data[i]) > max)
+                    max = this->abs(_data[i]);
+            }
+            return max;
+        }
+
         // template<typename T=float>
         template<class u> friend std::ostream& operator << (std::ostream& os, const Vector<u>& v);
 
@@ -241,6 +286,13 @@ class Vector
                 throw std::invalid_argument("Vector must be of the same size");
                 // exit(1);
             }
+        }
+
+        T abs(const T &n) const
+        {
+            if (n < 0)
+                return -n;
+            return n;
         }
 };
 
@@ -280,17 +332,26 @@ Vector<T> linear_combination(const std::vector<Vector<T>>& us, const std::vector
 }
 
 template<typename T=float>
-Vector<T> lerp(const Vector<T> &u, const Vector<T> &v, const float &t)
-{
-    return u + ((v - u) * t);
-}
-
-template<typename T=float>
 T lerp(const T &u, const T &v, const float &t)
 {
     return (u + ((v - u) * t));
 }
 
+template<typename T=float>
+float angle_cos(const Vector<T>& u, const Vector<T>& v)
+{
+    return (u.dot(v) / (u.norm() * v.norm()));
+}
 
+template<typename T=float>
+Vector<T> cross_product(const Vector<T>& u, const Vector<T>& v)
+{
+    // [(a2 * b3 – a3 * b2), (a3 * b1 – a1 * b3), (a1 * b2 – a2 * b1)]
+    if (u.size() != 3 || v.size() != 3)
+        throw std::invalid_argument("Cross product: u and v must be both 3D vectors");
+    return Vector<T>({u[1] * v[2] - u[2] * v[1], \
+    u[2] * v[0] - u[0] * v[2], \
+    u[0] * v[1] - u[1] * v[0]});    
+}
 
 #endif
