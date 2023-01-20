@@ -284,9 +284,6 @@ class Matrix
 
         Matrix reduced_row_echelon() const
         {
-            // Note: Matrix must be square
-            // if (!this->issquare())
-                // throw std::invalid_argument("Error: Matrix must be square to have a row_echelon form");
             Matrix<T> M(*this);
             int lead = 0;
             int m = M._shape[0];
@@ -401,32 +398,48 @@ class Matrix
 
         Matrix<T> inverse() const
         {
-            if (!this->issquare())
-            {
-                throw std::invalid_argument("Error: the matrix is not square, the inverse cannot be calculated");
-            }
+            // Concatenate matrix with its identity
+            // Get reduced_row_echelon of produced matrix
+            // extract righmost submatrix
             T det = this->determinant();
-            if (det == 0)
-            {
+            if (det == 0) // is_singular
                 throw std::invalid_argument("Error: the matrix is not invertible, the determinant is zero");
-            }
 		    Matrix		res(_shape[0], _shape[0] * 2);
 		    Matrix		inverse(_shape[0], _shape[0]);
 
-            // Matrix<T> id = this->identity(); 
-            //  cn=oncatenate identity
-		    for (int i = 0; i < res._shape[0]; ++i)	/* concatenate identity */
+		    for (int i = 0; i < res._shape[0]; ++i)
 		    {
 		    	res[i][i + res._shape[0]] = (T)1;
 		    	for (int j = 0; j < res._shape[0]; ++j)
 		    		res[i][j] = (*this)[i][j];
 		    }
 		    res = res.reduced_row_echelon();
-		    for (int i = 0; i < inverse._shape[0]; ++i)	/* extract inverse */
+                  
+		    for (int i = 0; i < inverse._shape[0]; ++i)
 		    	for (int j = 0; j < inverse._shape[1]; ++j)
 		    		inverse[i][j] = res[i][j + res._shape[0]];
 		    return (inverse);
         }
+
+        int rank()
+        {
+            Matrix<T> m(*this);
+            temp.reduced_row_echelon();
+            int rank = 0;
+            for (int i = 0; i < m.shape()[0]; i++)
+            {
+                for (int j = 0; j < m.shape()[1]; j++)
+                {
+                    if (temp[i][j] != 0)
+                    {
+                        rank++;
+                        break;
+                    }
+                }
+            }
+            return rank;
+        }
+
 
 
 
