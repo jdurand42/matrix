@@ -17,8 +17,9 @@ static void test_all()
 	test_ex07();
 	test_ex08();
 	// test_ex09();
-	// test_ex10();
-	// test_ex11();
+	test_ex10();
+	test_ex11();
+	test_ex12();
 }
 
 void print_title(const std::string& t, const int i)
@@ -65,12 +66,12 @@ int main(int ac, char** av)
 				test_ex08();
 			// else if (std::string(av[i]) == "ex09")
 				// test_ex09();
-			// else if (std::string(av[i]) == "ex10")
-				// test_ex10();
-			// else if (std::string(av[i]) == "ex11")
-				// test_ex11();
-			// else if (std::string(av[i]) == "ex12")
-				// test_ex12();
+			else if (std::string(av[i]) == "ex10")
+				test_ex10();
+			else if (std::string(av[i]) == "ex11")
+				test_ex11();
+			else if (std::string(av[i]) == "ex12")
+				test_ex12();
 		}
 	}
 	else

@@ -6,6 +6,11 @@
 #include <sstream>
 #include <cmath>
 
+#include "Matrix.hpp"
+
+template <typename T>
+class Matrix;
+
 template <typename T=float>
 class Vector
 {
@@ -57,9 +62,23 @@ class Vector
             return _size;
         };
 
-        void reshape()
+        Matrix<T> reshape(const int& m, const int& n) const
         {
-            //  Work in progress
+            // Reshape into a matrix
+            if (m * n != _size)
+                throw std::invalid_argument("Error: Cammpt reshape vector. m * n must be == size of vector");
+            Matrix<T> r(m, n);
+            int k = 0;
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    r[i][j] = _data[k];
+                    k++; 
+                }
+            }
+            return r;
         };
 
         void print() const

@@ -5,6 +5,9 @@
 #include <vector>
 #include "Vector.hpp"
 
+template <typename T>
+class Vector;
+
 template <typename T=float>
 class Matrix
 {
@@ -81,9 +84,14 @@ class Matrix
             return _shape;
         }
 
-        void reshape()
+        // reshape mat into vector
+        Vector<T> reshape() const
         {
-            //  Work in progress
+            std::vector<T> v;
+            for (int i = 0; i < _shape[0]; i++)
+                for (int j = 0; j < _shape[1]; j++)
+                    v.push_back(_data[i][j]);
+            return Vector<T>(v);
         };
 
         bool issquare() const
@@ -226,7 +234,7 @@ class Matrix
 
         Matrix operator * (const Matrix& m) const
         {
-            Matrix<> r(_shape[0], m._shape[1]);
+            Matrix<T> r(_shape[0], m._shape[1]);
             for (int i = 0; i < r._shape[0]; i++)
                 for (int j = 0; j < r._shape[1]; j++)
                     for (int k = 0; k < m._shape[0]; k++)
@@ -236,7 +244,7 @@ class Matrix
 
         Vector<T> operator * (const Vector<T>& v) const
         {
-            Vector<> r(_shape[0]);
+            Vector<T> r(_shape[0]);
             for (int i = 0; i < _shape[0]; i++)
                 for (int j = 0; j < v.size(); j++)
                 {
@@ -274,7 +282,157 @@ class Matrix
             return r;
         }
 
+        Matrix reduced_row_echelon() const
+        {
+            // Note: Matrix must be square
+            // if (!this->issquare())
+                // throw std::invalid_argument("Error: Matrix must be square to have a row_echelon form");
+            Matrix<T> M(*this);
+            int lead = 0;
+            int m = M._shape[0];
+            int n = M._shape[1];
+            for (int r = 0; r < m; r++)
+            {
+                if (n <= lead)
+                {
+                    return M;
+                }
+                int i = r;
+                while (M[i][lead] == 0)
+                {
+                    i++;
+                    if (m == i)
+                    {
+                        i = r;
+                        lead++;
+                        if (n == lead) {
+                            return M;
+                        }
+                    }
+                }
+                if (i != r)
+                {
+                    M._swap(i, r);
+                }
+                T div = M[r][lead];
+                for (int j = 0; j < n; j++)
+                {
+                    M[r][j] /= div;
+                }
+                for (int j = 0; j < m; j++)
+                {
+                    if (j != r)
+                    {
+                        T sub = M[j][lead];
+                        for (int k = 0; k < n; k++)
+                        {
+                            M[j][k] -= sub * M[r][k];
+                        }
+                    }
+                }
+                lead++;
+            }
+            return M;
+        }
+
+        T determinant() const
+        {
+            if (!this->issquare())
+                throw std::invalid_argument("Error: the matrix is not square, the determinant cannot be calculated");
+            T det = 1;
+            int n = this->_shape[0];
+            Matrix<T> m(*this);
+            for (int i = 0; i < n; i++)
+            {
+                int k = i;
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (abs(m[j][i]) > abs(m[k][i]))
+                    {
+                        k = j;
+                    }
+                }
+                if (k != i)
+                {
+                    m._swap(i, k);
+                    det = -det;
+                }
+                if (m[i][i] == 0)
+                {
+                    return 0;
+                }
+                det *= m[i][i];
+                for (int j = i + 1; j < n; j++)
+                {
+                    m[i][j] /= m[i][i];
+                }
+                for (int j = 0; j < n; j++)
+                {
+                    if (j != i && m[j][i] != 0)
+                    {
+                        for (int k = i + 1; k < n; k++)
+                        {
+                            m[j][k] -= m[i][k] * m[j][i];
+                        }
+                    }
+                }
+            }
+            return det;
+        }
+
+        Matrix identity()
+        {
+            if (!this->issquare())
+                throw std::invalid_argument("Eror: matrix isn't square, cannot compute identity");
+            Matrix<T> m(_shape[0], _shape[0]);
+            int n = _shape[0];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == j)
+                        m[i][j] = 1;
+                    else
+                        m[i][j] = 0;
+                }
+            }
+            return m;
+        }
+
+        Matrix<T> inverse() const
+        {
+            if (!this->issquare())
+            {
+                throw std::invalid_argument("Error: the matrix is not square, the inverse cannot be calculated");
+            }
+            T det = this->determinant();
+            if (det == 0)
+            {
+                throw std::invalid_argument("Error: the matrix is not invertible, the determinant is zero");
+            }
+		    Matrix		res(_shape[0], _shape[0] * 2);
+		    Matrix		inverse(_shape[0], _shape[0]);
+
+            // Matrix<T> id = this->identity(); 
+            //  cn=oncatenate identity
+		    for (int i = 0; i < res._shape[0]; ++i)	/* concatenate identity */
+		    {
+		    	res[i][i + res._shape[0]] = (T)1;
+		    	for (int j = 0; j < res._shape[0]; ++j)
+		    		res[i][j] = (*this)[i][j];
+		    }
+		    res = res.reduced_row_echelon();
+		    for (int i = 0; i < inverse._shape[0]; ++i)	/* extract inverse */
+		    	for (int j = 0; j < inverse._shape[1]; ++j)
+		    		inverse[i][j] = res[i][j + res._shape[0]];
+		    return (inverse);
+        }
+
+
+
         template<class u> friend std::ostream& operator << (std::ostream&, const Matrix<T>&);
+
+
 
     private:
 
@@ -296,6 +454,14 @@ class Matrix
                 throw std::invalid_argument("Invalid argument, shapes must match");
         }
 
+        void _swap(const int& i, const int& j)
+        {
+            Vector<T> t;
+            t = _data[i];
+            _data[i] = _data[j];
+            _data[j] = t;
+        }
+
         std::vector<Vector<T>> _data;
         int _shape[2];
 };
@@ -314,12 +480,6 @@ std::ostream& operator << (std::ostream& os, const Matrix<T>& m)
     os << "]";
     // os << std::endl;
     return os;
-}
-
-template<typename T=float>
-Matrix<T> lerp(const Matrix<T> &u, const Matrix<T> &v, const float &t)
-{
-    return u + ((v - u) * t);
 }
 
 #endif

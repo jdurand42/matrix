@@ -3,6 +3,7 @@
 #include "../Matrix.hpp"
 #include "tester.hpp"
 
+
 static void test_constructors()
 {
     print_title("Constructors");
@@ -136,6 +137,16 @@ static void test_math_operators()
     ft_print("u *= 0.5", u, bu * 2 * 0.5);
 }
 
+static void test_reshape()
+{
+    Matrix<> m = {{1, 2, 3}, {4, 5, 6}};
+    Vector<> v = m.reshape();
+    ft_print("m.reshape()", v, Vector<>({1, 2, 3, 4, 5, 6}));
+    Matrix<> m2 = {{1, 2, 3}};
+    v = m2.reshape();
+    ft_print("m.reshape()", v, Vector<>({1, 2, 3}));
+}
+
 void test_matrix_basic()
 {
     print_title("Matrix", 1);
@@ -143,4 +154,5 @@ void test_matrix_basic()
     test_operators();
     test_basic();
     test_math_operators();
+    test_reshape();
 }

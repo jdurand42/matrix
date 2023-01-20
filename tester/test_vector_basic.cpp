@@ -106,6 +106,14 @@ static void test_math_operators()
     ft_print("u != v", u != v, true);
 }
 
+static void test_reshape()
+{
+    Vector<> v = {1, 2, 3, 4, 5, 6};
+    ft_print("v.reshape()", v.reshape(2, 3), Matrix<>({{1, 2, 3}, {4, 5, 6}}));
+    ft_print("v.reshape()", v.reshape(3, 2), Matrix<>({{1, 2}, {3, 4}, {5, 6}}));
+    ft_print("v.reshape()", v.reshape(1, 6), Matrix<>({{1, 2, 3, 4, 5, 6}}));
+}
+
 
 void test_vector_basic()
 {
@@ -133,4 +141,5 @@ void test_vector_basic()
     {
         ;
     }
+    test_reshape();
 }

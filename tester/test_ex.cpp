@@ -5,7 +5,7 @@
 #include "../Vector.hpp"
 #include "../Matrix.hpp"
 #include "tester.hpp"
-// #include "climits"
+#include <limits>
 
 #define EPSILON std::numeric_limits<float>::epsilon()
 
@@ -256,7 +256,7 @@ void test_ex07()
 
 void test_ex08()
 {
-    print_title("Ex08");
+    print_title("Ex08", 1);
 
     Matrix<> u = {{1, 0}, {0, 1}};
     ft_print("u.trace()", u.trace(), 2.0f);
@@ -264,4 +264,40 @@ void test_ex08()
     ft_print("u.trace()", u.trace(), 9.0f);
     u = {{-2, -8, 4}, {1, -23, 4}, {0, 6, 4}};
     ft_print("u.trace()", u.trace(), -21.0f);
+}
+
+void test_ex10()
+{
+    print_title("Ex10", 1);
+    Matrix<> m({{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1.}});
+    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), m);
+    m = {{1, 2}, {3, 4}};
+    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), Matrix<>({{1, 0}, {0, 1}}));
+    m = {{1, 2}, {2, 4}};
+    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), Matrix<>({{1, 2}, {0, 0}}));    
+    m = {{8., 5., -2., 4., 28.}, {4., 2.5, 20., 4., -4.0}, {8., 5., 1., 4., 17.}};
+    Matrix<> r({{1.0, 0.625, 0.0, 0.0, -12.1666667}, {0.0, 0.0, 1.0, 0.0, -3.6666667}, {0.0, 0.0, 0.0, 1.0, 29.5}}); 
+    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), r);       
+}
+
+void test_ex11()
+{
+    print_title("Ex11", 1);
+    Matrix<> m({{1, -1}, {-1, 1}});
+    ft_print("m.determinant()", m.determinant(), 0.0f);
+    m = {{2, 0, 0}, {0, 2, 0}, {0, 0, 2}};
+    ft_print("m.determinant()", m.determinant(), 8.0f);
+    m = {{8, 5, -2}, {4, 7, 20}, {7, 6, 1}};
+    ft_print("m.determinant()", m.determinant(), -174.f);
+    m = {{8, 5, -2, 4}, {4, 2.5, 20, 4}, {8, 5, 1, 4}, {28, -4, 17, 1}};
+    ft_print("m.determinant()", m.determinant(), 1032.f);
+}
+
+void test_ex12()
+{
+    Matrix<> m({{2, 0, 0}, {0, 2, 0}, {0, 0, 2}});
+    std::cout << m.inverse() << std::endl;
+    m = {{8, 5, -2}, {4, 7, 20}, {7, 6, 1}};
+    std::cout << m.inverse() << std::endl;
+
 }
