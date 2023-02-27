@@ -20,6 +20,7 @@ static void test_all()
 	test_ex10();
 	test_ex11();
 	test_ex12();
+	test_ex13();
 }
 
 void print_title(const std::string& t, const int i)
@@ -71,6 +72,8 @@ int main(int ac, char** av)
 			else if (std::string(av[i]) == "ex11")
 				test_ex11();
 			else if (std::string(av[i]) == "ex12")
+				test_ex12();
+			else if (std::string(av[i]) == "ex13")
 				test_ex12();
 		}
 	}

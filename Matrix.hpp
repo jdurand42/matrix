@@ -423,14 +423,14 @@ class Matrix
 
         int rank()
         {
-            Matrix<T> m(*this);
-            temp.reduced_row_echelon();
+            // Matrix<T> m(*this);
+            Matrix<T> m = this->reduced_row_echelon();
             int rank = 0;
             for (int i = 0; i < m.shape()[0]; i++)
             {
                 for (int j = 0; j < m.shape()[1]; j++)
                 {
-                    if (temp[i][j] != 0)
+                    if (m[i][j]!= T())
                     {
                         rank++;
                         break;
