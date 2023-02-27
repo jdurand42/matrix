@@ -10,13 +10,24 @@
 #define EPSILON std::numeric_limits<float>::epsilon()
 
 
-static bool float_comp(const double& a, const double& b)
+static bool float_eq(const double& a, const double& b)
 {
     // std::cout << fabs(a - b) << std::endl;
     return fabs(a - b) <= ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * EPSILON);
     // return fabs(a - b) < EPSILON;
 }
 
+template<typename T>
+static bool matrix_float_eq(const Matrix<T>& u, const Matrix<T>& v)
+{
+    if (u.shape()[0] != v.shape()[0] or u.shape()[1] != v.shape()[1])
+        return false;
+    for (int i = 0; i < u.shape()[0]; i++)
+        for (int j = 0; j < u.shape()[1]; j++)
+            if (float_eq(u[i][j], v[i][j]) == false)
+                return false;
+    return true;
+}
 
 static void test_v_add()
 {
@@ -183,15 +194,15 @@ void test_ex04()
     Vector<> u3 = {-1, -2};
 
     // ft_print()
-    ft_print("norm (eculi)", float_comp(u.norm(), 0.0), true);
-    ft_print("norm (eculi)", float_comp(u2.norm(), 3.74165738), true);
-    ft_print("norm (eculi)", float_comp(u3.norm(), 2.236067977), true);
-    ft_print("norm_1 (manhatan)", float_comp(u.norm_1(), 0.0), true);
-    ft_print("norm_1 (manhatan)", float_comp(u2.norm_1(), 6.0), true);
-    ft_print("norm_1 (manhatan)", float_comp(u3.norm_1(), 3.0), true);
-    ft_print("norm_inf", float_comp(u.norm_inf(), 0.0), true);
-    ft_print("norm_inf", float_comp(u2.norm_inf(), 3.0), true);
-    ft_print("norm_inf", float_comp(u3.norm_inf(), 2.0), true);
+    ft_print("norm (eculi)", float_eq(u.norm(), 0.0), true);
+    ft_print("norm (eculi)", float_eq(u2.norm(), 3.74165738), true);
+    ft_print("norm (eculi)", float_eq(u3.norm(), 2.236067977), true);
+    ft_print("norm_1 (manhatan)", float_eq(u.norm_1(), 0.0), true);
+    ft_print("norm_1 (manhatan)", float_eq(u2.norm_1(), 6.0), true);
+    ft_print("norm_1 (manhatan)", float_eq(u3.norm_1(), 3.0), true);
+    ft_print("norm_inf", float_eq(u.norm_inf(), 0.0), true);
+    ft_print("norm_inf", float_eq(u2.norm_inf(), 3.0), true);
+    ft_print("norm_inf", float_eq(u3.norm_inf(), 2.0), true);
     // ft_print("norm_inf (inf)", std::vector<double>({u.norm_inf(), u2.norm_inf(), u3.norm_inf()}), std::vector<double>({0.0, 3.0, 2.0}));
 }
 
@@ -201,19 +212,19 @@ void test_ex05()
 
     Vector<> u = {1, 0};
     Vector<> v = {1, 0};
-    ft_print("cos()", float_comp(angle_cos(u, v), 1.0), true);
+    ft_print("cos()", float_eq(angle_cos(u, v), 1.0), true);
     u = {1, 0};
     v = {0, 1};
-    ft_print("cos()", float_comp(angle_cos(u, v), 0.0), true);
+    ft_print("cos()", float_eq(angle_cos(u, v), 0.0), true);
     u = {-1, 1};
     v = {1, -1};
-    ft_print("cos()", float_comp(angle_cos(u, v), -1.0), true);
+    ft_print("cos()", float_eq(angle_cos(u, v), -1.0), true);
     u = {2, 1};
     v = {4, 2};
-    ft_print("cos()", float_comp(angle_cos(u, v), 1.0), true);
+    ft_print("cos()", float_eq(angle_cos(u, v), 1.0), true);
     u = {1, 2, 3};
     v = {4, 5, 6};
-    ft_print("cos()", float_comp(angle_cos(u, v), 0.974631846), true);
+    ft_print("cos()", float_eq(angle_cos(u, v), 0.974631846), true);
 }
 
 void test_ex06()
@@ -282,38 +293,38 @@ void test_ex10()
 {
     print_title("Ex10", 1);
     Matrix<> m({{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1.}});
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), m);
+    ft_print("m.reduced_row_echelon()", matrix_float_eq(m.reduced_row_echelon(), m), true);
     m = {{1, 2}, {3, 4}};
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), Matrix<>({{1, 0}, {0, 1}}));
+    ft_print("m.reduced_row_echelon()", matrix_float_eq(m.reduced_row_echelon(), Matrix<>({{1, 0}, {0, 1}})), true);
     m = {{1, 2}, {2, 4}};
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), Matrix<>({{1, 2}, {0, 0}}));    
+    ft_print("m.reduced_row_echelon()", matrix_float_eq(m.reduced_row_echelon(), Matrix<>({{1, 2}, {0, 0}})), true);    
     m = {{8., 5., -2., 4., 28.}, {4., 2.5, 20., 4., -4.0}, {8., 5., 1., 4., 17.}};
     Matrix<> r({{1.0, 0.625, 0.0, 0.0, -12.1666667}, {0.0, 0.0, 1.0, 0.0, -3.6666667}, {0.0, 0.0, 0.0, 1.0, 29.5}}); 
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), r);       
+    ft_print("m.reduced_row_echelon()", matrix_float_eq(m.reduced_row_echelon(), r), true);       
 }
 
 void test_ex11()
 {
     print_title("Ex11", 1);
     Matrix<> m({{1, -1}, {-1, 1}});
-    ft_print("m.determinant()", m.determinant(), 0.0f);
+    ft_print("m.determinant()", float_eq(m.determinant(), 0.0f), true);
     m = {{2, 0, 0}, {0, 2, 0}, {0, 0, 2}};
-    ft_print("m.determinant()", m.determinant(), 8.0f);
+    ft_print("m.determinant()", float_eq(m.determinant(), 8.0f), true);
     m = {{8, 5, -2}, {4, 7, 20}, {7, 6, 1}};
-    ft_print("m.determinant()", m.determinant(), -174.f);
+    ft_print("m.determinant()", float_eq(m.determinant(), -174.f), true);
     m = {{8, 5, -2, 4}, {4, 2.5, 20, 4}, {8, 5, 1, 4}, {28, -4, 17, 1}};
-    ft_print("m.determinant()", m.determinant(), 1032.f);
+    ft_print("m.determinant()", float_eq(m.determinant(), 1032.f), true);
 }
 
 void test_ex12()
 {
     print_title("Ex12", 1);
     Matrix<> m({{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
-    ft_print("m.inverse()", m.inverse(), Matrix<>({{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
+    ft_print("m.inverse()", matrix_float_eq(m.inverse(), Matrix<>({{1, 0, 0}, {0, 1, 0}, {0, 0, 1}})), true);
     m = {{8, 5, -2}, {4, 7, 20}, {7, 6, 1}};
-    ft_print("m.inverse()", m.inverse(), Matrix<>({{0.649425287, 0.097701149, -0.655172414}, {-0.781609195, -0.126436782, 0.965517241}, {0.143678161, 0.074712644, -0.206896552}}));
+    ft_print("m.inverse()", matrix_float_eq(m.inverse(), Matrix<>({{0.649425287, 0.097701149, -0.655172414}, {-0.781609195, -0.126436782, 0.965517241}, {0.143678161, 0.074712644, -0.206896552}})), true);
     m = {{2, 0, 0}, {0, 2, 0}, {0, 0, 2}};
-    ft_print("m.inverse()", m.inverse(), Matrix<>({{0.5, 0, 0}, {0, 0.5, 0}, {0, 0, 0.5}}));
+    ft_print("m.inverse()", matrix_float_eq(m.inverse(), Matrix<>({{0.5, 0, 0}, {0, 0.5, 0}, {0, 0, 0.5}})), true);
 }
 
 void test_ex13()
