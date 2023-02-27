@@ -284,18 +284,18 @@ class Matrix
 
         Matrix reduced_row_echelon() const
         {
-            Matrix<T> M(*this);
+            Matrix<T> u(*this);
             int lead = 0;
-            int m = M._shape[0];
-            int n = M._shape[1];
+            int m = u._shape[0];
+            int n = u._shape[1];
             for (int r = 0; r < m; r++)
             {
                 if (n <= lead)
                 {
-                    return M;
+                    return u;
                 }
                 int i = r;
-                while (M[i][lead] == 0)
+                while (u[i][lead] == 0)
                 {
                     i++;
                     if (m == i)
@@ -303,33 +303,33 @@ class Matrix
                         i = r;
                         lead++;
                         if (n == lead) {
-                            return M;
+                            return u;
                         }
                     }
                 }
                 if (i != r)
                 {
-                    M._swap(i, r);
+                    u._swap(i, r);
                 }
-                T div = M[r][lead];
+                T div = u[r][lead];
                 for (int j = 0; j < n; j++)
                 {
-                    M[r][j] /= div;
+                    u[r][j] /= div;
                 }
                 for (int j = 0; j < m; j++)
                 {
                     if (j != r)
                     {
-                        T sub = M[j][lead];
+                        T sub = u[j][lead];
                         for (int k = 0; k < n; k++)
                         {
-                            M[j][k] -= sub * M[r][k];
+                            u[j][k] -= sub * u[r][k];
                         }
                     }
                 }
                 lead++;
             }
-            return M;
+            return u;
         }
 
         T determinant() const
