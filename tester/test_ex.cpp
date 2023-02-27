@@ -266,6 +266,18 @@ void test_ex08()
     ft_print("u.trace()", u.trace(), -21.0f);
 }
 
+void test_ex09()
+{
+    print_title("Ex09", 1);
+
+    Matrix<> m = {{1, 2}, {1, 2}};
+    ft_print("m.transpose()", m.transpose(), Matrix<>({{1, 1}, {2, 2}}));
+    m = {{1, 1}, {2, 2}};
+    ft_print("m.transpose()", m.transpose(), Matrix<>({{1, 2}, {1, 2}}));
+    m = {{1, 1, 3}, {2, 2, 4}};
+    ft_print("m.transpose()", m.transpose(), Matrix<>({{1, 2}, {1, 2}, {3, 4}}));
+}
+
 void test_ex10()
 {
     print_title("Ex10", 1);

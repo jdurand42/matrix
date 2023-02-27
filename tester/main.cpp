@@ -16,7 +16,7 @@ static void test_all()
 	test_ex06();
 	test_ex07();
 	test_ex08();
-	// test_ex09();
+	test_ex09();
 	test_ex10();
 	test_ex11();
 	test_ex12();
@@ -65,8 +65,8 @@ int main(int ac, char** av)
 				test_ex07();
 			else if (std::string(av[i]) == "ex08")
 				test_ex08();
-			// else if (std::string(av[i]) == "ex09")
-				// test_ex09();
+			else if (std::string(av[i]) == "ex09")
+				test_ex09();
 			else if (std::string(av[i]) == "ex10")
 				test_ex10();
 			else if (std::string(av[i]) == "ex11")

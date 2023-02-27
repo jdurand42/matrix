@@ -404,8 +404,8 @@ class Matrix
             T det = this->determinant();
             if (det == 0) // is_singular
                 throw std::invalid_argument("Error: the matrix is not invertible, the determinant is zero");
-		    Matrix		res(_shape[0], _shape[0] * 2);
-		    Matrix		inverse(_shape[0], _shape[0]);
+		    Matrix<T> res(_shape[0], _shape[0] * 2);
+		    Matrix<T> inverse(_shape[0], _shape[0]);
 
 		    for (int i = 0; i < res._shape[0]; ++i)
 		    {
@@ -421,7 +421,7 @@ class Matrix
 		    return (inverse);
         }
 
-        int rank()
+        int rank() const
         {
             // Matrix<T> m(*this);
             Matrix<T> m = this->reduced_row_echelon();
@@ -438,6 +438,19 @@ class Matrix
                 }
             }
             return rank;
+        }
+
+        Matrix transpose() const
+        {
+            Matrix<T> t(_shape[1], _shape[0]);
+            for (int i = 0; i < _shape[0]; i++)
+            {
+                for (int j =0; j < _shape[1]; j++)
+                {
+                    t[j][i] = _data[i][j];
+                }
+            }
+            return t;
         }
 
 

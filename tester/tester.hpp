@@ -66,7 +66,7 @@ void test_ex05();
 void test_ex06();
 void test_ex07();
 void test_ex08();
-// void test_ex09();
+void test_ex09();
 void test_ex10();
 void test_ex11();
 void test_ex12();
