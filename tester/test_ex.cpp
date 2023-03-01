@@ -292,14 +292,14 @@ void test_ex10()
 {
     print_title("Ex10", 1);
     Matrix<> m({{1., 0., 0.}, {0., 1., 0.}, {0., 0., 1.}});
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), m);
+    ft_print("m.row_echelon()", m.row_echelon(), m);
     m = {{1, 2}, {3, 4}};
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), Matrix<>({{1, 0}, {0, 1}}));
+    ft_print("m.row_echelon()", m.row_echelon(), Matrix<>({{1, 0}, {0, 1}}));
     m = {{1, 2}, {2, 4}};
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), Matrix<>({{1, 2}, {0, 0}}));    
+    ft_print("m.row_echelon()", m.row_echelon(), Matrix<>({{1, 2}, {0, 0}}));    
     m = {{8., 5., -2., 4., 28.}, {4., 2.5, 20., 4., -4.0}, {8., 5., 1., 4., 17.}};
     Matrix<> r({{1.0, 0.625, 0.0, 0.0, -12.1666667}, {0.0, 0.0, 1.0, 0.0, -3.6666667}, {0.0, 0.0, 0.0, 1.0, 29.5}}); 
-    ft_print("m.reduced_row_echelon()", m.reduced_row_echelon(), r);       
+    ft_print("m.row_echelon()", m.row_echelon(), r);       
 }
 
 void test_ex11()

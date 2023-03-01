@@ -278,11 +278,11 @@ class Matrix
             T r = T();
             
             for (int i = 0; i < _shape[0]; i++)
-            r += _data[i][i];
+                r += _data[i][i];
             return r;
         }
 
-        Matrix reduced_row_echelon() const
+        Matrix row_echelon() const
         {
             Matrix<T> u(*this);
             int lead = 0;
@@ -330,7 +330,7 @@ class Matrix
                 lead++;
             }
             return u;
-        }
+        } 
 
         T determinant() const
         {
@@ -377,46 +377,26 @@ class Matrix
             return det;
         }
 
-        Matrix identity()
-        {
-            if (!this->issquare())
-                throw std::invalid_argument("Eror: matrix isn't square, cannot compute identity");
-            Matrix<T> m(_shape[0], _shape[0]);
-            int n = _shape[0];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (i == j)
-                        m[i][j] = 1;
-                    else
-                        m[i][j] = 0;
-                }
-            }
-            return m;
-        }
-
         Matrix<T> inverse() const
         {
             // Concatenate matrix with its identity
-            // Get reduced_row_echelon of produced matrix
+            // Get row_echelon of produced matrix
             // extract righmost submatrix
             T det = this->determinant();
             if (det == 0) // is_singular
                 throw std::invalid_argument("Error: the matrix is not invertible, the determinant is zero");
 		    Matrix<T> res(_shape[0], _shape[0] * 2);
 		    Matrix<T> inverse(_shape[0], _shape[0]);
-
-		    for (int i = 0; i < res._shape[0]; ++i)
+		    for (int i = 0; i < res._shape[0]; i++)
 		    {
 		    	res[i][i + res._shape[0]] = (T)1;
-		    	for (int j = 0; j < res._shape[0]; ++j)
+		    	for (int j = 0; j < res._shape[0]; j++)
 		    		res[i][j] = (*this)[i][j];
 		    }
-		    res = res.reduced_row_echelon();
+		    res = res.row_echelon();
                   
-		    for (int i = 0; i < inverse._shape[0]; ++i)
-		    	for (int j = 0; j < inverse._shape[1]; ++j)
+		    for (int i = 0; i < inverse._shape[0]; i++)
+		    	for (int j = 0; j < inverse._shape[1]; j++)
 		    		inverse[i][j] = res[i][j + res._shape[0]];
 		    return (inverse);
         }
@@ -424,7 +404,7 @@ class Matrix
         int rank() const
         {
             // Matrix<T> m(*this);
-            Matrix<T> m = this->reduced_row_echelon();
+            Matrix<T> m = this->row_echelon();
             int rank = 0;
             for (int i = 0; i < m.shape()[0]; i++)
             {
