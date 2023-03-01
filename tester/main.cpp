@@ -74,7 +74,7 @@ int main(int ac, char** av)
 			else if (std::string(av[i]) == "ex12")
 				test_ex12();
 			else if (std::string(av[i]) == "ex13")
-				test_ex12();
+				test_ex13();
 		}
 	}
 	else

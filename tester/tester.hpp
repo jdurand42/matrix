@@ -39,19 +39,6 @@
 	// std::cout << color << t << std::endl << "-------" << std::endl <<  RESET;
 // };
 
-template<typename T>
-void ft_print(const std::string& method, const T& tested, const T& result)
-{
-	usleep(TIME);
-	std::cout << "- " << method << ": " << std::endl;
-	if (tested == result)
-		std::cout << GREEN << "OK -> ";
-	else
-		std::cout << RED << "ERROR -> ";
-	std::cout << "Got: " << tested << " | " << "Excepted: " << result;
-	std::cout << RESET << std::endl;
-};
-
 
 void print_title(const std::string &t, const int i=0);
 
@@ -71,4 +58,56 @@ void test_ex10();
 void test_ex11();
 void test_ex12();
 void test_ex13();
+bool float_eq(const double& a, const double& b);
+template<typename T>
+bool matrix_float_eq(const Matrix<T>& u, const Matrix<T>& v);
+
+class Ft_cmp
+{
+	public:
+	bool ft_cmp(const double& a, const double& b)
+	{
+		return float_eq(a, b);
+	};
+
+	template<typename T>
+	bool ft_cmp(const Matrix<T>& u, const Matrix<T>& v)
+	{
+		return matrix_float_eq(u, v);
+	};
+
+	template<typename T>
+	bool ft_cmp(const Vector<T>& u, const Vector<T>& v)
+	{
+		return (u == v);
+	};
+
+
+	// template<typename Y>
+	// bool ft_cmp(const Y& a, const Y& b)
+	// {
+		// std::cout <<"hello" << std::endl;
+		// return (a == b);
+	// };
+	private:
+};
+
+
+template<typename T>
+void ft_print(const std::string& method, const T& tested, const T& result)
+{
+	usleep(TIME);
+	std::cout << "- " << method << ": " << std::endl;
+	bool cmp_res;
+	Ft_cmp cmpf;
+
+	cmp_res = cmpf.ft_cmp(tested, result);
+
+	if (cmp_res == true)
+		std::cout << GREEN << "OK -> ";
+	else
+		std::cout << RED << "ERROR -> ";
+	std::cout << "Got: " << tested << " | " << "Excepted: " << result;
+	std::cout << RESET << std::endl;
+};
 #endif
